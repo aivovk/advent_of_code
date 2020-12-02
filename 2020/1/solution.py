@@ -18,7 +18,7 @@ def partTwoBruteForce():
     for i1 in range(len(nums)):
         for i2 in range(i1 + 1, len(nums)):
             for i3 in range( i2 + 1, len(nums)):
-                if nums[i1] + nums[i2] + nums[i3] == 2020:
+                if nums[i1] + nums[i2] + nums[i3] == 2020: 
                     return nums[i1]*nums[i2]*nums[i3]
 def partTwo():
     with open("input.txt") as f:
