@@ -2,21 +2,13 @@ def partOne():
     maxSeatID = 0
     minSeatID = 1000000
     sumSeatID = 0
+    conversion = {'F':'0',
+                  'B':'1',
+                  'L':'0',
+                  'R':'1'}
     with open("input.txt") as f:
         for line in f:
-            row = 0
-            partition = 1
-            for c in line[0:7][::-1]:
-                row += (c=='B') * partition
-                partition *= 2
-
-            col = 0
-            partition = 1
-            for c in line[7:10][::-1]:
-                col += (c=='R') * partition
-                partition *=2
-                
-            seatID = row * 8 + col
+            seatID = int(''.join(conversion[c] for c in line[:10]),2)
             sumSeatID += seatID
             maxSeatID = max(maxSeatID, seatID)
             minSeatID = min(minSeatID, seatID)
