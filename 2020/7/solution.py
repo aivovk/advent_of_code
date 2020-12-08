@@ -9,8 +9,7 @@ def buildTrees():
         for line in f:
             line = line.rstrip('.\n')
             parent, children_str = line.split(" bags contain ")
-            child_list = children_str.split(", ")
-            for child_str in child_list:
+            for child_str in children_str.split(", "):
                 args = pattern.match(child_str)
                 if args is not None:
                     numbags = int(args.group(1))
