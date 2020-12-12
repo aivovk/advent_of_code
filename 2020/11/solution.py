@@ -10,19 +10,23 @@ def load():
     return data
 
 def updateOne(data, nextstep):
+    modified = False
     for i in range(1,len(data)-1):
         for j in range(1,len(data[i])-1):
             if data[i,j] == 'L':
                 if (data[i-1:i+2,j-1:j+2]=='#').sum() == 0:
                     nextstep[i,j] = '#'
+                    modified = True
                 else:
                     nextstep[i,j] = 'L'
             elif data[i,j] == '#':
                 # -1 since we counted the current seat
                 if (data[i-1:i+2,j-1:j+2]=='#').sum() - 1 >= 4:
                     nextstep[i,j] = 'L'
+                    modified = True
                 else:
                     nextstep[i,j] = '#'
+    return modified
 
 def isVisibleOccupiedSeatInDirection(data,i,j,d):
     nrows = data.shape[0]
@@ -42,25 +46,27 @@ def countVisibleOccupiedSeats(data,i,j):
     return sum(isVisibleOccupiedSeatInDirection(data,i,j,d) for d in directions)
 
 def updateTwo(data, nextstep):
+    modified = False
     for i in range(1,len(data)-1):
         for j in range(1,len(data[i])-1):
             if data[i,j] == 'L':
                 if countVisibleOccupiedSeats(data,i,j) == 0:
                     nextstep[i,j] = '#'
+                    modified = True
                 else:
                     nextstep[i,j] = 'L'
             elif data[i,j] == '#':
                 if countVisibleOccupiedSeats(data,i,j) >= 5:
                     nextstep[i,j] = 'L'
+                    modified = True
                 else:
                     nextstep[i,j] = '#'
+    return modified
 
 def findSteadyState(data, updateRule):
     nextstep = np.copy(data)
-    updateTwo(data, nextstep)
-    while (data != nextstep).any():
+    while updateRule(data, nextstep):
         data, nextstep = nextstep, data
-        updateRule(data,nextstep)
     return (data == '#').sum()
     
 
