@@ -19,7 +19,7 @@ def partTwo():
     # for each bus look for busses that will arrive at the same time
     # (if their relative offsets are divisible by bus ID)
     #
-    # then for that bus, it's timestamp+offset will be divisible by the product
+    # then for that bus, its timestamp+offset will be divisible by the product
     # of all the bus IDs that arrive at the same time (since they are relatively prime)
     factors = [1] * len(busses)
     for current in range(len(busses)):
