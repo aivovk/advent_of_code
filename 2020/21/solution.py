@@ -29,7 +29,8 @@ def partOneAndTwo():
                     if a1 != a2:
                         a_to_i[a2] -= a_to_i[a1]
                         
-    # count number of times non-allergenic ingredients appear    
+    # count number of times non-allergenic ingredients appear
+    # this works without the one-to-one map above
     allergenic_ingredients = set()
     for v in a_to_i.values():
         allergenic_ingredients |= v
