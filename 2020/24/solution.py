@@ -34,12 +34,16 @@ def countNeighbours(tiles, x, y):
     return n
 
 def partTwo(tiles):
-    minx = min(x for x,y in tiles.keys()) - 1
-    maxx = max(x for x,y in tiles.keys()) + 1
-    miny = min(y for x,y in tiles.keys()) - 1
-    maxy = max(y for x,y in tiles.keys()) + 1
+    minx = min(x for x,y in tiles.keys())
+    maxx = max(x for x,y in tiles.keys())
+    miny = min(y for x,y in tiles.keys())
+    maxy = max(y for x,y in tiles.keys())
 
     for step in range(100):
+        minx -= 1
+        miny -= 1
+        maxx += 1
+        maxy += 1
         nextstep = collections.defaultdict(bool)
         for x in range(minx, maxx+1):
             for y in range(miny, maxy+1):
@@ -50,10 +54,6 @@ def partTwo(tiles):
                 elif n == 2: # white
                     nextstep[(x,y)] = True
         tiles = nextstep
-        minx -= 1
-        miny -= 1
-        maxx += 1
-        maxy += 1
     return sum(1 for k,v in tiles.items() if v)
 
 if __name__=="__main__":
