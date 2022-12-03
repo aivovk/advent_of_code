@@ -1,4 +1,4 @@
-/[0-9]+/ {sum += $1}
+{sum += $1}
 /^$/ {if (sum > max1) {
 	if (sum > max2) {
 	    max1 = max2
