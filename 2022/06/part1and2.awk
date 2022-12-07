@@ -1,15 +1,9 @@
-{ print find_unique_substr(4)"\n"find_unique_substr(14) }
+BEGIN { FS="" } { print find_distinct(4)"\n"find_distinct(14) }
 
-function find_unique_substr(len,    char_counts, i, c){
-    for ( i = 1 ; i <= length($0) ; i++){
-	c = substr($0,i,1)
-	char_counts[c]++;
-	if (i > len){
-	    c = substr($0, i - len, 1)
-	    char_counts[c]--
-	    if (char_counts[c] == 0) delete char_counts[c]
-	}
-	if (length(char_counts) == len) return i
+function find_distinct(n,    cc, i){ # cc: char counter
+    for (i = 1 ; i <= NF ; i++){
+	cc[$i]++
+	if (i > n) if (--cc[$(i-n)] == 0) delete cc[$(i-n)]
+	if (length(cc) == n) return i
     }
 }
-
