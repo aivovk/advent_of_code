@@ -1,3 +1,5 @@
-{sum += $1}
-/^$/ {if (sum > max) max = sum ; sum = 0}
-END {print max}
+{ sum += $1 }
+/^$/ { update() }
+END { update() ; print max }
+
+function update() { if (sum > max) max = sum ; sum = 0 }
