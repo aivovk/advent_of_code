@@ -11,5 +11,5 @@ NR == 1 { cols = NF }
 }
 END {
     rows = NR
-    print search(visited)
+    print search(visited, visited)
 }
