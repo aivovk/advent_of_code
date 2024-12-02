@@ -1,11 +1,8 @@
 #!/bin/bash
-cut -d ' ' -f4 $1 > temp
-cut -d ' ' -f1 $1 | {
-    while read a
+join -1 2 -2 2 <(cut -d ' ' -f1 $1 | sort | uniq -c) <(cut -d ' ' -f4 $1 | sort | uniq -c) | {
+    while read a b c
     do
-	# very slow
-	b=$(grep -c $a temp)
-	((sum+=a*b))
+	((sum+=a*b*c))
     done
     echo $sum
 }
