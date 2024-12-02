@@ -1,0 +1,11 @@
+#!/bin/bash
+cut -d ' ' -f4 $1 > temp
+cut -d ' ' -f1 $1 | {
+    while read a
+    do
+	# very slow
+	b=$(grep -c $a temp)
+	((sum+=a*b))
+    done
+    echo $sum
+}
