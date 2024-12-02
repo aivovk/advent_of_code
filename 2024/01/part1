@@ -1,0 +1,13 @@
+#!/bin/bash
+paste <(cut -d ' ' -f1 $1 | sort) <(cut -d ' ' -f4 $1 | sort ) | {
+    while read a b
+    do
+	if (( a > b ))
+	then
+	    (( sum+=a-b ))
+	else
+	    (( sum+=b-a ))
+	fi
+    done
+    echo $sum
+}
