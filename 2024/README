@@ -1,5 +1,17 @@
+Attempting to solve as much as I can in bash (and coreutils). Awk is not allowed
+since I used it in 2022. I haven't decided about other restrictions (grep, sed,
+bc?).
+
+
+Usage
+-----
+All solutions take the input filename as the only argument:
+
+    bash part1 input
+
 References
 ----------
+- https://www.gnu.org/software/bash/manual/bash.html
 - https://tldp.org/LDP/Bash-Beginners-Guide/html
 - https://tldp.org/LDP/abs/html/
 - https://github.com/dylanaraps/pure-sh-bible
