@@ -1,0 +1,53 @@
+#!/bin/bash
+while read -a report
+do
+    safe=0
+    # remove represents the id of the level that will be removed
+    # note that we ignore the case when no levels are removed since
+    # we can always remove the first or last level anyway
+    remove=0
+    while (( !safe && remove < ${#report[@]} ))
+    do
+	# i and j are ids of the levels we are comparing
+	i=0
+	j=1
+	if (( remove == 0 ))
+	then
+	    i=1
+	    j=2
+	elif (( remove == 1 ))
+	then
+	    i=0
+	    j=2
+	fi
+
+	# determine if levels are increasing or decreasing
+	if (( report[j] > report[i] ))
+	then
+	    incr=1
+	else
+	    incr=-1
+	fi
+	for (( ; j < ${#report[@]} ; j++))
+	do
+	    # skip check if this level is removed
+	    # note that i is not updated in this case
+	    if (( j == remove ))
+	    then
+		continue
+	    fi
+	    (( diff = incr * (report[j] - report[i]) ))
+	    if (( diff < 1 || diff > 3 ))
+	    then
+		# check failed so try removing the next level
+		((remove++))
+		continue 2
+	    fi
+	    ((i=j))
+	done
+	safe=1
+	break
+    done
+    ((sum+=safe))
+done <$1
+echo $sum
