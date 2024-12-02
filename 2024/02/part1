@@ -1,0 +1,22 @@
+#!/bin/bash
+while read -a report
+do
+    first=${report[0]}
+    second=${report[1]}
+    if (( second > first ))
+    then
+	incr=1
+    else
+	incr=-1
+    fi
+    for ((i=1 ; i < ${#report[@]} ; i++))
+    do
+	((diff=incr*(${report[i]}-${report[i-1]})))
+	if (( diff < 1 || diff > 3 ))
+	then
+	    continue 2
+	fi
+    done
+    ((sum++))
+done <$1
+echo $sum
