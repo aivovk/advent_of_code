@@ -1,0 +1,22 @@
+#!/bin/bash
+memory=$(<$1)
+enable=1
+while [[ $memory =~ mul\(([0-9]+),([0-9]+)\) ]]
+do
+    memory_mul=${memory#*${BASH_REMATCH[0]}}
+    memory_do=${memory#*do\(\)}
+    memory_dont=${memory#*don\'t\(\)}
+    if (( ${#memory} > ${#memory_do} && (${#memory_dont} == ${#memory} || ${#memory_do} > ${#memory_dont}) && ${#memory_do} > ${#memory_mul} ))
+    then
+	enable=1
+	memory=$memory_do
+    elif (( ${#memory} > ${#memory_dont} && ${#memory_dont} > ${#memory_mul} ))
+    then
+	enable=0
+	memory=$memory_dont
+    else
+        (( $enable )) && (( result += BASH_REMATCH[1] * BASH_REMATCH[2] ))
+	memory=$memory_mul
+    fi
+done
+echo $result
