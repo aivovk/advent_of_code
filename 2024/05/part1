@@ -1,0 +1,22 @@
+#!/bin/bash
+IFS='|'
+declare -A rules
+part=1 # part=1: read ordering rules, part=2: read updates
+while read -a input
+do
+    if (( part == 1 ))
+    then
+	(( ${#input} == 0 ))  && (( part++)) && IFS=',' && continue
+	rules[${input[1]}${input[0]}]=1
+    else
+	for (( i=0 ; i < ${#input[@]} ; i++ ))
+	do
+	    for (( j=i+1 ; j < ${#input[@]} ; j++ ))
+	    do
+		[[ ${rules[${input[i]}${input[j]}]} ]] && continue 3
+	    done
+	done
+        ((sum+=${input[${#input[@]}/2]}))
+    fi	
+done <$1
+echo $sum
