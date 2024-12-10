@@ -1,0 +1,48 @@
+#!/bin/bash
+s=$(<$1)
+end=$(echo $s | tr -dc '0-9' | wc -c)
+# len of test and input is odd (so last digit is always a file)
+echo $s
+echo $end
+((end--))
+start=0
+echo ${s:start:1}
+echo ${s:end:1}
+end_size=${s:end:1}
+while (( start < end ))
+do
+    if (( start % 2 == 0 ))
+    then
+	((file=start/2))
+	size=${s:start:1}
+	while (( size-- > 0))
+	do
+	    ((sum+=pos++*file))
+	done
+	((start++))
+    else
+	if (( end_size == 0 ))
+	then
+	   ((end-=2))
+	   end_size=${s:end:1}
+	fi
+	((file=end/2))
+	blank=${s:start:1}
+	if (( end_size >= blank ))
+	then
+	    ((end_size-=blank))
+	    while (( blank-- > 0 ))
+	    do
+		((sum+=pos++*file))
+	    done
+	    ((start++))
+	else
+	    while ((end_size-- >0))
+	    do
+		((sum+=pos++*file))
+	    done
+	fi
+    fi
+    echo $start $end $end_size $sum
+done
+echo $sum
